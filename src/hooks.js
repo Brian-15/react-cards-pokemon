@@ -10,13 +10,14 @@ const useFlip = () => {
   return [isFacingUp, flipCard];
 };
 
-const useAxios = (url) => {
-  const [cards, setCards] = useState([]);
-  const addCard = async () => {
+const useAxios = (baseUrl, isStatic) => {
+  const [data, setData] = useState([]);
+  const addData = async (suffix) => {
+    const url = isStatic ? baseUrl : `${baseUrl}${suffix}`
     const response = await axios.get(url);
-    setCards(cards => [...cards, { ...response.data, id: uuid() }]);
+    setData(data => [...data, { ...response.data, id: uuid() }]);
   };
-  return [cards, addCard];
+  return [data, addData];
 };
 
 export { useFlip, useAxios };
